@@ -26,7 +26,7 @@ class User(Base):
     is_active = Column(Boolean(), default=True)
     is_superuser = Column(Boolean(), default=False)
     
-    # OAuth providers
+    # OAuth providers - store only IDs here, tokens are in OAuthToken
     google_id = Column(String(255), nullable=True, unique=True)
     microsoft_id = Column(String(255), nullable=True, unique=True)
     slack_id = Column(String(255), nullable=True, unique=True)
@@ -52,6 +52,27 @@ class User(Base):
         cascade="all, delete-orphan",
     )
     
+    # PII data relationship - separate storage for sensitive data
+    pii_data = relationship(
+        "UserPII",
+        back_populates="user",
+        uselist=False,  # one-to-one relationship
+        cascade="all, delete-orphan",
+    )
+    
+    # OAuth tokens - separate storage for security
+    oauth_tokens = relationship(
+        "OAuthToken",
+        back_populates="user",
+        cascade="all, delete-orphan",
+    )
+    
+    # Security and compliance flags
+    data_retention_consent = Column(Boolean(), default=False)
+    last_terms_acceptance = Column(String(20), nullable=True)  # Version of last accepted terms
+    last_privacy_acceptance = Column(String(20), nullable=True)  # Version of last accepted privacy policy
+    require_mfa = Column(Boolean(), default=False)  # Multi-factor authentication requirement
+    
     def __repr__(self):
         return f"<User {self.email}>"
     
@@ -69,4 +90,19 @@ class User(Base):
         """
         Check if user is authenticated via OAuth.
         """
-        return bool(self.google_id or self.microsoft_id or self.slack_id) 
+        return bool(self.google_id or self.microsoft_id or self.slack_id)
+    
+    @property
+    def has_complete_profile(self) -> bool:
+        """
+        Check if user has completed their profile.
+        """
+        return bool(self.first_name and self.last_name)
+    
+    @property
+    def has_accepted_current_terms(self) -> bool:
+        """
+        Check if user has accepted the current terms of service.
+        """
+        from app.core.config import settings
+        return self.last_terms_acceptance == settings.CURRENT_TERMS_VERSION 

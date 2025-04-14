@@ -22,6 +22,10 @@ class Settings(BaseSettings):
     
     # Authentication
     ALGORITHM: str = "HS256"  # JWT token algorithm
+    REFRESH_TOKEN_EXPIRE_DAYS: int = 30  # 30 days
+    MFA_ENABLED: bool = False  # Multi-factor authentication
+    MFA_ISSUER: str = "EverRaise"  # Issuer for TOTP
+    PASSWORD_RESET_TOKEN_EXPIRE_HOURS: int = 24  # 24 hours
     
     # CORS Configuration
     CORS_ORIGINS: List[str] = ["http://localhost:3000", "http://localhost:8000", "http://localhost:5173", "http://localhost:5174"]
@@ -98,12 +102,29 @@ class Settings(BaseSettings):
     MICROSOFT_CLIENT_SECRET: str = ""
     SLACK_CLIENT_ID: str = ""
     SLACK_CLIENT_SECRET: str = ""
+    
+    # OAuth callback URLs (for different environments)
+    OAUTH_REDIRECT_URL_DEV: str = "http://localhost:3000/auth/callback"
+    OAUTH_REDIRECT_URL_STAGING: str = "https://staging.everraise.app/auth/callback"
+    OAUTH_REDIRECT_URL_PROD: str = "https://app.everraise.app/auth/callback"
 
     # Security & Monitoring
     ENVIRONMENT: str = "development"
     SENTRY_DSN: Optional[HttpUrl] = None
     LOG_LEVEL: str = "INFO"
     ENCRYPTION_KEY: str = secrets.token_hex(16)  # For encrypting sensitive data
+    
+    # PII Handling & Data Protection
+    PII_ENCRYPTION_ENABLED: bool = True
+    PII_LOGGING_ENABLED: bool = True  # Enable logging of PII access
+    PII_RETENTION_DAYS: int = 365  # Default retention period for PII
+    REDACT_PII_IN_LOGS: bool = True  # Redact PII in logs
+    
+    # Data Compliance & Consent
+    CURRENT_TERMS_VERSION: str = "1.0.0"  # Current Terms of Service version
+    CURRENT_PRIVACY_VERSION: str = "1.0.0"  # Current Privacy Policy version
+    REQUIRE_CONSENT_FOR_PII: bool = True  # Require explicit consent for PII storage
+    CONSENT_EXPIRY_DAYS: int = 365  # Consent expiry period
 
     # Application Features
     ENABLE_REPORT_SCHEDULING: bool = True
@@ -114,6 +135,11 @@ class Settings(BaseSettings):
     GMAIL_API_CREDENTIALS_FILE: str = "credentials.json"
     GMAIL_API_TOKEN_FILE: str = "token.json"
     GMAIL_API_SCOPES: str = "https://www.googleapis.com/auth/gmail.readonly"
+    
+    # Rate Limiting
+    RATE_LIMIT_PER_MINUTE: int = 60  # Default API rate limit per minute
+    LOGIN_RATE_LIMIT_PER_MINUTE: int = 5  # Login attempts per minute
+    PASSWORD_RESET_RATE_LIMIT_PER_HOUR: int = 3  # Password reset requests per hour
 
 
 settings = Settings() 
