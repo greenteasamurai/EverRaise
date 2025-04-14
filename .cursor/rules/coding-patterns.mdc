@@ -1,0 +1,16 @@
+---
+description: Coding Patterns and Prefs
+globs: 
+alwaysApply: true
+---
+- Always prefer simple solutions
+- Avoid duplication of code whenever possible, which means checking for other areas of the codebase that might already have similar code and functionality
+-All config-dependent logic should be environment-aware. Avoid hardcoding environment-based values; use .env or config files with appropriate defaults.
+-For any non-trivial change, create a test case demonstrating current vs. expected behavior. Include a migration note if altering data structures.
+-When fixing an issue or bug, do not introduce a new pattern or technology without first exhausting all options for the existing implementation. And if you finally do this, make sure to remove the old implementaiton afterwards so we don't have duplicate logic.
+- Keep the codebase very clean and organized.
+- Avoid writing scripts in files if possible, especially if the script is likely only to be run once.
+- Refactor files over 300 lines unless they contain self-contained logic (e.g., configurations, one-time scripts). Aim for modularity, ensuring functions/classes do one thing well.
+- Mocking data is only needed for tests, never mock data for dev or prod.
+- Never add stubbing or fake data patterns to code that affects the dev or prod environments. 
+- Use .env.local for temporary changes, never commit .env changes unless explicitly part of a deployment update.

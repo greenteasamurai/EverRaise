@@ -1,0 +1,9 @@
+---
+description: Tech Stack Preferences
+globs: 
+alwaysApply: true
+---
+- Backend: Python 3.11+: Strong data processing capabilities, excellent AI/ML libraries, aligns with your existing skills; FastAPI: High performance, async support, automatic API documentation, type hints; PostgreSQL: Robust relational database with JSON support, strong transaction capabilities; Pinecone or Weaviate: Efficient storage and search for embeddings, optimized for semantic retrieval OAuth2 with JWT: Supports third-party integration requirements; Celery with Redis: Handles background tasks and scheduled reports
+- Frontend: React with TypeScript: Component-based architecture with type safety; Tailwind CSS with shadcn/ui: Consistent design system, rapid development
+- DevOps & Infrastructure: Docker: Containerization for consistent environments; GitHub Actions: CI/CD for automated testing and deployment; AWS or GCP: Cloud providers for scalable infrastructure
+

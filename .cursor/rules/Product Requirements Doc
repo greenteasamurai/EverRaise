@@ -1,0 +1,102 @@
+# EverRaise Product Requirements Document (PRD)
+
+## 1. Overview
+**EverRaise** is an AI-powered platform designed to extract value from business communications (emails, chat, meetings, and documents) to generate automated reports, investor updates, and business insights. The goal is to save 95%+ of the time spent manually compiling these reports while maintaining human oversight. This document outlines the product scope, user requirements, features, and constraints.
+
+## 2. Objectives
+### 2.1 Business Goals
+- Automate the generation of investor updates, business review reports, and project knowledge summaries.
+- Enhance operational efficiency by reducing manual reporting efforts.
+- Ensure security and compliance with role-based access control (RBAC) and AI output validation.
+- Provide seamless integration with collaboration and data sources.
+
+### 2.2 Technical Goals
+- Implement Retrieval-Augmented Generation (RAG) for structured and accurate report generation.
+- Use dynamic model selection for specialized LLM responses.
+- Maintain secure access control and logging to prevent unauthorized data exposure.
+- Deploy scalable cloud-based infrastructure with containerized microservices.
+
+## 3. Target Users
+### 3.1 Primary Users
+- **Startup Founders & Executives:** Need to provide consistent investor updates.
+- **Operations & Strategy Teams:** Require weekly business reviews and knowledge summaries.
+- **VCs & Investors:** Consume structured updates from startups they have invested in.
+
+### 3.2 Secondary Users
+- **Compliance & Security Teams:** Ensure data security and control access to sensitive business reports.
+- **Engineering Teams:** Use knowledge repositories for tracking technical and business project updates.
+
+## 4. Key Features
+
+### 4.1 Report Generation
+- **Investor Updates**: AI-generated reports based on meeting notes, financial data, and Slack/email conversations.
+- **Business Reviews**: Weekly summaries including operational and financial insights.
+- **Knowledge Summaries**: Project-specific updates compiled from Slack threads, emails, and documents.
+
+### 4.2 AI-Powered Processing
+- **RAG-Based LLM Pipeline**:
+  - Indexes emails, meeting transcripts, Slack messages, and reports.
+  - Retrieves context from stored business data before generating reports.
+  - Ensures AI output remains factual and relevant to business metrics.
+- **Dynamic Model Selection**:
+  - GPT-4 for general business reports.
+  - Google Gemini for reasoning-heavy insights.
+  - Local models (LLaMA, Qwen) for sensitive, privacy-focused requests.
+- **Human-in-the-Loop Review**:
+  - Users approve reports before they are finalized and distributed.
+  - Confidence scores and citations included in AI-generated content.
+
+### 4.3 Integrations
+- **Communication Platforms**: Gmail, Outlook, Slack, Microsoft Teams, Google Chat.
+- **Project Management**: Jira, Asana, Notion, Confluence.
+- **Cloud Storage**: Google Drive, Dropbox, SharePoint.
+- **CRM & BI Tools**: Salesforce, HubSpot, Tableau.
+
+### 4.4 Security & Compliance
+- **Role-Based Access Control (RBAC)**:
+  - Admins: Full access to report generation and data management.
+  - Managers: Create and approve reports.
+  - Employees: View access with project-based restrictions.
+- **Data Protection**:
+  - TLS 1.3 for in-transit encryption, AES-256 for data at rest.
+  - PII redaction before sending data to external LLMs.
+- **Logging & Monitoring**:
+  - Tamper-proof audit logs for report generation and access.
+  - Automated security scans and adversarial testing for AI-generated content.
+
+### 4.5 User Experience & Workflow
+1. User connects EverRaise to communication & data sources.
+2. AI extracts key insights and generates a report draft.
+3. User reviews, edits (if necessary), and approves the final version.
+4. The report is distributed via email, Slack, or stored in the knowledge repository.
+5. System logs actions for security compliance and tracking.
+
+## 5. Non-Functional Requirements
+- **Performance**: Reports should be generated within 5-10 seconds of a request.
+- **Scalability**: Support concurrent report generation across multiple companies and teams.
+- **Reliability**: 99.9% uptime SLA with multi-region cloud failover.
+- **Compliance**: Must meet GDPR, SOC2, and HIPAA security requirements.
+
+## 6. Development Roadmap
+1. **MVP (3 months)**:
+   - Core report generation (investor updates, weekly reviews).
+   - Gmail, Slack, and Google Chat integrations.
+   - Basic RAG-based LLM pipeline.
+   - Role-based access control (RBAC) implementation.
+2. **Phase 2 (6 months)**:
+   - Expand integrations (Jira, Notion, Salesforce, Tableau).
+   - Advanced AI validation (bias reduction, hallucination prevention).
+   - Security enhancements (audit logs, IAM fine-tuning).
+3. **Phase 3 (12 months)**:
+   - AI-driven knowledge repository.
+   - Private LLM hosting for enterprises.
+   - Compliance automation tools.
+
+## 7. Open Questions
+- What level of customization should users have over report templates?
+- Should there be a self-hosted version for highly regulated industries?
+- What pricing model best aligns with early-stage startup adoption?
+
+---
+This PRD defines EverRaise’s core functionalities, security considerations, and development roadmap to ensure alignment with business goals and technical feasibility.
+

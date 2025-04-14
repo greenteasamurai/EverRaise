@@ -1,0 +1,14 @@
+---
+description: Security Ruleset
+globs: 
+alwaysApply: true
+---
+-All API endpoints must enforce authentication & authorization checks before data retrieval. No unauthenticated endpoints should return sensitive data.
+-Use OAuth2 with JWT for API auth, with token expiration policies in place. Never rely on long-lived tokens without refresh mechanisms.
+-Never log or expose secrets, passwords, API keys, or personally identifiable information (PII). Use environment variables for sensitive data storage.
+-All PII must be masked or anonymized before being used in AI processing.
+-Never store raw customer emails, passwords, or API keys in logs. Use structured logging with redacted fields.
+-Ensure encryption for data at rest (AES-256) and in transit (TLS 1.3).
+-AI-generated content should be reviewed before being used externally. No fully autonomous output should be published without human review.
+-Use retrieval-augmented generation (RAG) to keep LLMs grounded in approved datasets. No hallucination-prone open-ended queries should be processed without constraints.
+-Implement adversarial testing for bias and hallucinations before LLM deployment.

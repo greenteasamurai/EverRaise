@@ -1,0 +1,50 @@
+# EverRaise PowerShell Commands
+# Copy and paste these commands into PowerShell to run them
+
+# Start both servers (run from project root)
+# ---------------------------------------------
+# Method 1: Using our helper script (recommended)
+.\fix-issues.ps1
+
+# Method 2: Sequential commands
+# First start backend
+cd .\backend
+python -m uvicorn app.main:app --host 0.0.0.0 --port 8000
+
+# Then open a new PowerShell window and run:
+cd C:\Users\scott\Desktop\Echo\EverRaise\frontend
+npm run dev
+
+# Fix port conflicts
+# ---------------------------------------------
+# Check for port usage
+Get-NetTCPConnection -LocalPort 8000 -ErrorAction SilentlyContinue
+
+# Kill processes using port 8000
+$conn = Get-NetTCPConnection -LocalPort 8000 -ErrorAction SilentlyContinue
+if ($conn) {
+    $process = Get-Process -Id $conn.OwningProcess -ErrorAction SilentlyContinue
+    Stop-Process -Id $process.Id -Force
+}
+
+# Fix database issues
+# ---------------------------------------------
+# Backup database
+cd .\backend
+Copy-Item everraise.db everraise.db.backup -Force
+
+# Remove database to start fresh
+cd .\backend
+Rename-Item everraise.db everraise.db.old -Force
+
+# PowerShell command syntax notes
+# ---------------------------------------------
+# INCORRECT: Using && (this won't work)
+cd backend && python -m uvicorn app.main:app --host 0.0.0.0 --port 8000
+
+# CORRECT: Using semicolons
+cd .\backend; python -m uvicorn app.main:app --host 0.0.0.0 --port 8000
+
+# BETTER: Using separate lines or multiple commands
+cd .\backend
+python -m uvicorn app.main:app --host 0.0.0.0 --port 8000 

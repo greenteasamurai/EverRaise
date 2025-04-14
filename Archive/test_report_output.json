@@ -1,0 +1,19 @@
+{
+  "title": "Test Knowledge Summary",
+  "report_type": "knowledge_summary",
+  "content": {
+    "error": "Error generating report: 'str' object has no attribute 'metadata'"
+  },
+  "summary": "Error generating report: 'str' object has no attribute 'metadata'",
+  "token_usage": {
+    "prompt_tokens": 0,
+    "completion_tokens": 0,
+    "total_tokens": 0
+  },
+  "data_sources": [
+    "gmail"
+  ],
+  "confidence_score": 0.0,
+  "citations": [],
+  "status": "error"
+}

@@ -1,0 +1,92 @@
+# Python virtual environment
+.venv/
+venv/
+*/.venv/
+*/venv/
+
+# Python cache files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Node.js dependencies
+node_modules/
+*/node_modules/
+
+# IDE/Editor files
+.vscode/
+.idea/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Add any other project-specific ignores below 
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+
+# Virtual environments
+venv/
+env/
+ENV/
+
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Logs
+logs/
+*.log
+
+# Local config
+.env
+.env.local
+*.env
+.env.*
+!.env.example
+
+# OAuth credentials and tokens
+backend/token.json
+backend/credentials.json
+backend/app/token.json
+backend/app/credentials.json
+**/token.json
+**/credentials.json
+
+# Cache files
+.cache/
+__pycache__/
+.pytest_cache/
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Credentials
+credentials-patterns.txt
+
+# Windows specific
+Thumbs.db
+desktop.ini
+
+# macOS specific
+.DS_Store
+._*
+
+# Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
+yarn-debug.log 

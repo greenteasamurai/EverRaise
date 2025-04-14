@@ -1,0 +1,114 @@
+# EverRaise Tech Specification - Refactoring Plan
+
+## 1. Overview
+EverRaise is being refactored to enhance modularity, improve LLM integration, and reinforce security while maintaining scalability. This document outlines the technical approach, focusing on architecture, LLM integration, and security enhancements.
+
+## 2. Architecture
+
+### 2.1 Core Technologies
+- **Frontend:** React (Next.js for SSR support)
+- **Backend:** FastAPI (Python 3.11+)
+- **Database:** PostgreSQL with `pgvector` for embedding storage
+- **AI/LLM Processing:** Retrieval-Augmented Generation (RAG) pipeline with dynamic model selection
+- **Authentication & IAM:** OAuth2 + JWT for API access, RBAC for permission control
+- **Deployment:** Docker + Kubernetes for container orchestration
+- **Security Compliance:** SOC2, GDPR, HIPAA readiness
+
+### 2.2 System Design
+- **Microservices-Based API:**
+  - `auth-service`: Handles authentication and user roles
+  - `llm-service`: Manages LLM interactions, model selection, and embeddings
+  - `report-service`: Generates reports, investor updates, and knowledge summaries
+  - `storage-service`: Manages structured/unstructured data storage
+  - `security-service`: Monitors logs, access controls, and compliance enforcement
+- **Message Queue for Async Processing:** Redis + Celery
+- **Event-Driven Data Processing:** Kafka for streaming meeting transcripts, Slack updates, and emails
+- **Environment Separation:** Dev, Test, and Prod environments with strict configuration management
+
+## 3. LLM Integration
+
+### 3.1 Retrieval-Augmented Generation (RAG) Pipeline
+- **Document Indexing:**
+  - Meeting notes, emails, Slack conversations, reports stored in `pgvector`
+  - Indexed via OpenAI embeddings for semantic search
+- **Dynamic Model Selection:**
+  - GPT-4 (OpenAI) for general business reports
+  - Google Gemini for reasoning-heavy tasks
+  - Local LLMs (e.g., LLaMA, Qwen) for privacy-sensitive requests
+- **Pipeline Workflow:**
+  1. User requests report generation
+  2. System retrieves relevant context from the knowledge store
+  3. Selected LLM processes the request
+  4. Human-in-the-loop review before finalizing the output
+  5. Report is stored securely with version tracking
+- **LLM Output Filtering:** Confidence scores & retrieval source citations before finalization
+- **API Rate Limits & Cost Controls:** Limits set to prevent excessive API token usage
+
+### 3.2 API Design for LLM Calls
+- `POST /llm/generate` → Generates a new report with retrieved context
+- `GET /llm/context/{query}` → Returns relevant context from indexed data
+- `POST /llm/train` → Fine-tunes local models based on internal data
+- **LLM Governance:** Adversarial testing for bias, hallucinations, and security risks
+
+## 4. Security & Compliance
+
+### 4.1 IAM & Access Control
+- **Role-Based Access Control (RBAC):**
+  - Admins: Full access
+  - Managers: Report creation, limited data access
+  - Employees: View-only permissions on relevant reports
+- **Multi-Factor Authentication (MFA)** enforced for all privileged roles
+- **Audit Logs:**
+  - Every API request and data retrieval is logged
+  - Tamper-proof logging using AWS CloudTrail or Google Chronicle
+  - Logging must redact PII and sensitive data
+
+### 4.2 Data Protection & Privacy
+- **End-to-End Encryption:**
+  - TLS 1.3 for data in transit
+  - AES-256 for data at rest
+- **PII Redaction for AI Processing:**
+  - Personally identifiable information (PII) masked before sending data to external LLMs
+  - Secure enclave for handling sensitive queries internally
+- **Data Retention Policy:**
+  - Reports stored for 12 months by default
+  - Configurable retention settings for compliance needs (GDPR, SOC2, HIPAA)
+- **Environment-Specific Data Handling:** Strict separation between dev, test, and prod databases
+
+### 4.3 Secure LLM Usage
+- **LLM Output Filtering:**
+  - AI-generated responses validated against compliance policies
+  - Pre-deployment adversarial testing for bias & hallucinations
+  - Human-in-the-loop for critical investor or financial reports
+- **Private LLM Hosting (Optional for Enterprises):**
+  - Deploy local models on-premise for full data control
+  - Access control for sensitive document retrieval
+
+## 5. Deployment Strategy
+### 5.1 Infrastructure
+- **Cloud Hosting:** AWS/GCP/Azure (multi-region support for redundancy)
+- **Kubernetes Cluster:**
+  - Auto-scaling nodes
+  - Dedicated LLM processing instances
+- **CI/CD Pipeline:**
+  - GitHub Actions for automated testing & deployment
+  - Canary releases for major updates
+  - Security scans (SAST/DAST) before deployment
+
+### 5.2 Rollout Plan
+1. **Phase 1:** Refactor core services (Auth, Storage, Security)
+2. **Phase 2:** Migrate LLM workflows into modular microservices
+3. **Phase 3:** Implement advanced IAM & security policies
+4. **Phase 4:** Beta testing with select users
+5. **Phase 5:** Full production release
+
+## 6. Next Steps
+- Finalize API contracts for LLM interactions
+- Implement baseline RBAC policies
+- Set up logging & monitoring for security events
+- Begin testing modularized RAG pipeline
+- Ensure full environment separation & encryption enforcement
+
+---
+This tech spec ensures EverRaise remains scalable, secure, and optimized for AI-driven content generation while maintaining strict compliance controls.
+

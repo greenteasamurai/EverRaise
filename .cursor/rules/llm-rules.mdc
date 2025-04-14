@@ -1,0 +1,9 @@
+---
+description: LLM Dev Rules
+globs: 
+alwaysApply: true
+---
+-All LLM queries should be contextualized using RAG. Avoid direct calls without document embeddings to prevent hallucinations.
+-Cap API token usage per request to prevent excessive costs & prompt injection attacks.
+-Flag AI-generated responses that contain numbers, financials, or legal terms for human review. Ensure no false metrics are generated.
+-Use confidence scores & retrieval source citations before sending outputs externally.

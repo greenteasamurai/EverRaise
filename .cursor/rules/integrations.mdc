@@ -1,0 +1,35 @@
+---
+description: Rules for Integrations and keeping them running easily
+globs: 
+alwaysApply: true
+---
+# Permissions and Security
+- Use Latest Permissions: Always verify that you’re using the most current permission sets, tokens, or API keys. Outdated credentials can lead to access issues or security vulnerabilities.
+- Confirm Access Rights: Before initiating any integration, double-check the access rights and scopes. If permissions seem unclear or insufficient, reach out immediately for clarification rather than guessing.
+- Principle of Least Privilege: Assign only the minimum level of access required for the integration. This minimizes risk if an integration is compromised.
+
+# Minimal Integration Approach
+- Limit the Number of Integrations: Only integrate with the APIs or services that are strictly necessary. Keeping the integration footprint small reduces the surface area for potential issues.
+- Assess Necessity for Redundancy: Redundancy should be implemented only when it’s needed for failover or high availability. Avoid adding multiple integrations that perform the same function unless your business continuity strategy calls for it.
+
+# Technical Best Practices
+- Stay Aligned with Documentation: Use the most recent API documentation and adhere to versioning guidelines. Monitor release notes for any changes that might impact your integration.
+- Robust Error Handling and Logging: Incorporate comprehensive error handling and logging mechanisms. This aids in quickly diagnosing issues if something goes wrong.
+- Secure Data Transmission: Always use secure protocols (e.g., HTTPS, TLS) and modern authentication methods (e.g., OAuth) to protect data integrity and confidentiality.
+- Optimize API Calls: Structure API requests efficiently to avoid unnecessary calls. Respect rate limits and optimize for latency and performance.
+
+# Communication & Collaboration
+- Clarify Uncertainties Immediately: If any integration detail or permission is missing or unclear, immediately ask for further instructions or consult with your team. Clear communication avoids assumptions that could lead to errors.
+- Document Integrations Thoroughly: Keep a record of all integrations, including permission details, API endpoints, and version requirements. This documentation is vital for troubleshooting and for onboarding new team members.
+- Feedback Loop: Set up a process for periodic reviews of integrations. Regular audits help ensure that all components remain secure and function as expected.
+
+# Continuous Monitoring & Updates
+- Regular Audits: Periodically audit each integration to ensure it still meets current security and performance standards. Remove outdated or unused integrations to reduce maintenance overhead.
+- Change Management: Use version control to track changes to your integration code. Before rolling out updates, test changes in a controlled environment to verify that new versions of APIs or permissions don’t disrupt functionality.
+- Performance Monitoring: Continuously monitor API response times and error rates. If performance degrades, review and optimize your integration strategy.
+
+# Governance & Compliance
+- Adhere to Industry Standards: Ensure that your integration practices comply with relevant industry standards and regulations (e.g., GDPR, HIPAA). This is critical for protecting user data and maintaining trust.
+- Centralized Management: Use a centralized dashboard or management tool to track all active integrations. This helps in maintaining a holistic view and quickly identifying potential vulnerabilities.
+- Risk Assessment: Perform regular risk assessments for each integration to identify potential security or performance risks. Implement mitigation strategies as needed.
+
